@@ -5,27 +5,31 @@ import Tabs from '../views/Tabs.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
-  },
-  {
-    path: '/tabs/',
     component: Tabs,
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
+        redirect: '/home'
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1.vue')
+        path: 'swipe-shop',
+        component: () => import('@/views/Swipe&Shop.vue')
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
+        path: 'contents',
+        component: () => import('@/views/Contents.vue')
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3.vue')
+        path: 'home',
+        component: () => import('@/views/Home.vue')
+      },
+      {
+        path: 'cart',
+        component: () => import('@/views/Cart.vue')
+      },
+      {
+        path: 'account',
+        component: () => import('@/views/Account.vue')
       }
     ]
   }
