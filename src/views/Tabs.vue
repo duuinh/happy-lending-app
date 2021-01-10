@@ -4,7 +4,7 @@
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="้swipe-shop" href="/swipe-shop">
           <ion-icon :icon="triangle" />
-          <ion-label>Tab 1</ion-label>
+          <ion-label>Swipe&Shop</ion-label>
         </ion-tab-button>
           
         <ion-tab-button tab="contents" href="/contents">
