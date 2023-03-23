@@ -2,13 +2,13 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>บัญชี</ion-title>
+        <ion-title>Account</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">บัญชี</ion-title>
+          <ion-title size="large">Account</ion-title>
         </ion-toolbar>
       </ion-header>
     

@@ -2,17 +2,17 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Swipe&Shop</ion-title>
+        <ion-title>Borrow</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Swipe&Shop</ion-title>
+          <ion-title size="large">Borrow</ion-title>
         </ion-toolbar>
       </ion-header>
       
-      <ExploreContainer name="Swipe&Shop page" />
+      <ExploreContainer name="Borrow page" />
     </ion-content>
   </ion-page>
 </template>
@@ -22,7 +22,7 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
-  name: 'Swipe&Shop',
+  name: 'Borrow',
   components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
 }
 </script>

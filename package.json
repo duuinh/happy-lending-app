@@ -1,5 +1,5 @@
 {
-  "name": "shop-app",
+  "name": "happy-lending-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -14,9 +14,9 @@
     "@ionic/vue": "^5.4.0",
     "@ionic/vue-router": "^5.4.0",
     "core-js": "^3.6.5",
+    "express": "^4.16.3",
     "vue": "^3.0.0-0",
-    "vue-router": "^4.0.0-0",
-    "express": "^4.16.3"
+    "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.4",

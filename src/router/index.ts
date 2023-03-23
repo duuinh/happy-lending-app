@@ -12,24 +12,20 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/home'
       },
       {
-        path: 'swipe-shop',
-        component: () => import('@/views/Swipe&Shop.vue')
-      },
-      {
-        path: 'contents',
-        component: () => import('@/views/Contents.vue')
-      },
-      {
         path: 'home',
         component: () => import('@/views/Home.vue')
       },
       {
-        path: 'cart',
-        component: () => import('@/views/Cart.vue')
-      },
-      {
         path: 'account',
         component: () => import('@/views/Account.vue')
+      },
+      {
+        path: 'borrow',
+        component: () => import('@/views/Borrow.vue')
+      },
+      {
+        path: 'lend',
+        component: () => import('@/views/Lend.vue')
       }
     ]
   }
