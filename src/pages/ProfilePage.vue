@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-page class="q-pa-md doc-container bg-grey-1">
+    <q-page class="q-pa-md bg-grey-1">
       <div class="column items-center">
         <div class="q-pa-lg text-brown text-weight-bold text-h6">Profile</div>
         <div class="column items-center" v-if="store.user">
@@ -22,7 +22,7 @@
           <q-icon color="brown-4" size="72px" name="account_circle"></q-icon>
           <div class="q-pa-lg q-gutter-sm">
             <q-btn unelevated color="brown-5" label="Login" to="/login" />
-            <q-btn color="brown-5" outline label="Register" />
+            <q-btn color="brown-5" outline label="Register" to="/register" />
           </div>
         </div>
       </div>
