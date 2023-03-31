@@ -14,5 +14,10 @@ export const useUserStore = defineStore("user", {
       this.user = data;
       localStorage.setItem("user", data);
     },
+    async register(payload) {
+      const { data } = await api.post(`/api/users`, payload);
+      this.user = data;
+      localStorage.setItem("user", data);
+    },
   },
 });

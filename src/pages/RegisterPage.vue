@@ -12,6 +12,25 @@
             class="q-pa-xs"
             filled
             color="brown"
+            v-model="form.name"
+            label="Name"
+            placeholder="John Doe"
+          />
+          <q-select
+            filled
+            class="q-pa-xs"
+            color="brown"
+            v-model="form.location"
+            :options="locationOptions"
+            map-options
+            emit-value
+            label="Location"
+            behavior="menu"
+          />
+          <q-input
+            class="q-pa-xs"
+            filled
+            color="brown"
             v-model="form.email"
             label="KTH email"
             placeholder="xxx@kth.se"
@@ -33,9 +52,9 @@
             size="lg"
             text-color="white"
             unelevated
-            label="Login"
+            label="Register"
             no-caps
-            @click="login"
+            @click="register"
           />
         </div> </q-page
     ></q-page-container>
@@ -44,23 +63,31 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { useUserStore } from "../stores/user";
+import { useLocationStore } from "../stores/location";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
-  name: "LoginPage",
+  name: "RegisterPage",
   setup() {
     const router = useRouter();
     const $q = useQuasar();
-    const store = useUserStore();
-    const form = ref({ email: "", phone_no: "" });
+    const userStore = useUserStore();
+    const locationStore = useLocationStore();
+    let locationOptions = ref([]);
+    const form = ref({
+      location: "",
+      name: "",
+      email: "",
+      phone_no: "",
+    });
     const err_msg = ref("");
-    async function login() {
+    async function register() {
       try {
         $q.loading.show();
-        await store.login(form.value);
-        if (store.user) {
+        await userStore.register(form.value);
+        if (userStore.user) {
           router.push("/profile");
         }
       } catch (err) {
@@ -69,7 +96,20 @@ export default defineComponent({
         $q.loading.hide();
       }
     }
-    return { err_msg, form, store, login };
+
+    onMounted(async () => {
+      $q.loading.show();
+      await locationStore.fetchLocations();
+      locationOptions.value = locationOptions.value.concat(
+        locationStore.locations.map((location) => {
+          return { label: location.name, value: location._id };
+        })
+      );
+      $q.loading.hide();
+    });
+    return { err_msg, form, register, locationOptions };
   },
 });
 </script>
+
+// TODO: e-mail validate, check if the email is already registered
