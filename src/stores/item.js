@@ -11,5 +11,8 @@ export const useItemStore = defineStore("item", {
       const { data } = await api.get(`/api/items`);
       this.items = data;
     },
+    async postItems(payload) {
+      const { data } = await api.post(`/api/items`, payload);
+    },
   },
 });
