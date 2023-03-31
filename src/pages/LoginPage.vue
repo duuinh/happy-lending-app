@@ -60,9 +60,7 @@ export default defineComponent({
       try {
         $q.loading.show();
         await store.login(form.value);
-        console.log("11");
         if (store.user) {
-          console.log("22");
           router.push("/");
         }
       } catch (err) {
