@@ -10,8 +10,17 @@ const routes = [
     ],
   },
   {
+    path: "/register",
+    component: () => import("pages/RegisterPage.vue"),
+  },
+  {
     path: "/login",
     component: () => import("pages/LoginPage.vue"),
+  },
+
+  {
+    path: "/lenditem",
+    component: () => import("pages/LendItemPage.vue"),
   },
 
   // Always leave this as last one,
