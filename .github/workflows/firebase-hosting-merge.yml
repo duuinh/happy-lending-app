@@ -11,7 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm ci && npx quasar build --mode pwa
+      - run: |
+          touch .env
+          echo VUE_APP_API=${{ secrets.VUE_APP_API }} >> .env
+          npm ci && npx quasar build --mode pwa
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
