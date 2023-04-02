@@ -56,12 +56,22 @@
         align="justify"
       >
         <q-route-tab to="/" name="home" icon="home" label="Home" />
-        <q-route-tab to="/borrow" name="borrow" icon="circle" label="Borrow" />
-        <q-route-tab to="/lend" name="lend" icon="circle" label="lend" />
+        <q-route-tab
+          to="/borrow"
+          name="borrow"
+          icon="keyboard_arrow_down"
+          label="Borrow"
+        />
+        <q-route-tab
+          to="/lend"
+          name="lend"
+          icon="keyboard_arrow_up"
+          label="lend"
+        />
         <q-route-tab
           to="/profile"
           name="profile"
-          icon="circle"
+          icon="account_circle"
           label="Profile"
         />
       </q-tabs>

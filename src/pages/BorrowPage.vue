@@ -26,9 +26,9 @@
       </q-card>
     </div>
   </q-page>
-  <q-page-sticky position="bottom" :offset="[18, 18]">
+  <!-- <q-page-sticky position="bottom" :offset="[18, 18]">
     <q-btn round size="lg" color="brown" icon="add" />
-  </q-page-sticky>
+  </q-page-sticky> -->
 </template>
 
 <script>
