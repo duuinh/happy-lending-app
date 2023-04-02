@@ -8,6 +8,9 @@
           <q-btn flat round size="lg" color="grey" icon="close" to="/profile" />
         </q-page-sticky>
         <div>
+          <div class="q-pa-lg text-brown text-weight-bold text-h6">
+            Please Login
+          </div>
           <q-input
             class="q-pa-xs"
             filled
