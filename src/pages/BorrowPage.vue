@@ -21,7 +21,8 @@
           <q-btn flat round color="red-2" icon="bookmark" />
           <q-btn flat round color="black" icon="share" />
           <q-space />
-          <q-btn flat color="brown" label="Borrow" />
+          <q-btn flat color="brown" label="Borrow" 
+          :to="`borrow/${item._id}`" />
         </q-card-actions>
       </q-card>
     </div>
@@ -46,8 +47,9 @@ export default defineComponent({
       await store.fetchItems();
       $q.loading.hide();
     });
+
     return {
-      store,
+      store
     };
   },
 });
