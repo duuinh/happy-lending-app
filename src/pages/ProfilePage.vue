@@ -4,8 +4,8 @@
       <div class="column items-center">
         <div class="q-pa-lg text-brown text-weight-bold text-h6">Profile</div>
         <div class="column items-center" v-if="store.user">
-          <q-avatar size="72px">
-            <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+          <q-avatar size="72px" color="brown" text-color="white">
+            {{ store.user.name[0] }}
           </q-avatar>
           <div class="text-subtitle1 q-mt-md q-mb-xs">
             {{ store.user.name }}
