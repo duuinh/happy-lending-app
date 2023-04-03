@@ -47,13 +47,14 @@
                 dayjs(contract.updatedAt).fromNow()
               }}</q-item-label>
               <q-btn
+                outline
                 color="deep-orange-5"
                 class="q-mt-md"
                 @click="endContract(contract._id)"
               >
                 <div class="row items-center no-wrap">
                   <div class="text-center">
-                    <q-icon name="task_alt" /> <br />End
+                    <q-icon name="assignment_returned" />
                   </div>
                 </div>
               </q-btn>
@@ -141,11 +142,18 @@ export default defineComponent({
       $q.loading.hide();
     });
 
-    async function endContract(id) {
-      $q.loading.show();
-      await contractStore.updateContractStatus(id, ContractStatusEnum.closed);
-      await contractStore.fetchLendingItems();
-      $q.loading.hide();
+    function endContract(id) {
+      $q.dialog({
+        title: "Item Returned",
+        message: "Would you like to end the contract?",
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        $q.loading.show();
+        await contractStore.updateContractStatus(id, ContractStatusEnum.closed);
+        await contractStore.fetchLendingItems();
+        $q.loading.hide();
+      });
     }
     return { contractStore, dayjs, endContract };
   },
