@@ -1,71 +1,46 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <!-- <q-header reveal class="bg-orange-1 text-brown" height-hint="98">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="../assets/icon-handshake.svg" />
-          </q-avatar>
-          HappyLending
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header> -->
-
     <q-page-container>
       <q-page
         class="fullscreen bg-orange-3 text-white text-center q-pa-md flex flex-center"
       >
-        <!-- <q-page class="flex flex-center bg-grey-1"> Lend item page </q-page> -->
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/lend" />
         </q-page-sticky>
-        <div class="q-pa-md">
-          <div
-            class="q-gutter-y-md column text-center"
-            style="max-width: 300px"
-          >
-            <q-img
-              :src="form.img_url"
-              spinner-color="white"
-              style="height: 140px; max-width: 150px"
-            >
-              <q-btn
-                class="absolute all-pointer-events"
-                icon="add_a_photo"
-                color="grey"
-                round
-                size="xs"
-                style="bottom: 8px; right: 8px"
-              >
-                <q-tooltip> Upload Image </q-tooltip>
-              </q-btn>
-            </q-img>
-
-            <q-input
-              v-model="form.name"
-              filled
-              label="What do you want to lend?"
-              stack-label
-              :dense="dense"
-              color="brown"
-              placeholder="Name of item"
-            />
-
+        <div class="q-gutter-y-md column text-center items-center">
+          <q-img :src="form.img_url" spinner-color="white" style="width: 200px">
             <q-btn
-              class="q-mt-md"
-              color="brown"
-              size="lg"
-              text-color="white"
-              unelevated
-              label="Submit"
-              no-caps
-              @click="submit"
-            />
+              class="absolute all-pointer-events"
+              icon="add_a_photo"
+              color="grey"
+              round
+              size="xs"
+              style="bottom: 8px; right: 8px"
+            >
+              <q-tooltip> Upload Image </q-tooltip>
+            </q-btn>
+          </q-img>
 
-            <!-- <div class="q-pa-md q-gutter-sm"> -->
-
-            <!-- </div> -->
-          </div>
+          <q-input
+            v-model="form.name"
+            filled
+            label="What do you want to lend?"
+            stack-label
+            :dense="dense"
+            color="brown"
+            placeholder="Name of item"
+          />
+          <q-space />
+          <q-btn
+            class="q-mt-md"
+            color="brown"
+            size="lg"
+            text-color="white"
+            unelevated
+            label="Submit"
+            no-caps
+            @click="submit"
+          />
         </div>
       </q-page>
     </q-page-container>
