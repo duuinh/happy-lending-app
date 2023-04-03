@@ -23,6 +23,12 @@ const routes = [
     component: () => import("pages/LendItemPage.vue"),
   },
 
+  { 
+    path: "/borrow/:itemId", 
+    component: () => import("pages/BorrowItemPage.vue") 
+  },
+
+
   // Always leave this as last one,
   // but you can also remove it
   {
