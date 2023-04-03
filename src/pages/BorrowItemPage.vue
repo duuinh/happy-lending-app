@@ -6,7 +6,7 @@
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/borrow" />
         </q-page-sticky>
-        <div>
+        <div class="column items-center">
           <div class="q-pa-lg text-brown text-center text-weight-bold text-h6">
             I Want To Borrow
           </div>
