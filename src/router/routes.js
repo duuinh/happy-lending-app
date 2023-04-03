@@ -19,15 +19,14 @@ const routes = [
   },
 
   {
-    path: "/lenditem",
+    path: "/lend/item",
     component: () => import("pages/LendItemPage.vue"),
   },
 
-  { 
-    path: "/borrow/:itemId", 
-    component: () => import("pages/BorrowItemPage.vue") 
+  {
+    path: "/borrow/:itemId",
+    component: () => import("pages/BorrowItemPage.vue"),
   },
-
 
   // Always leave this as last one,
   // but you can also remove it

@@ -6,7 +6,7 @@
     <MyItems></MyItems>
   </q-page>
   <q-page-sticky position="bottom" :offset="[18, 18]">
-    <q-btn round size="lg" color="brown" icon="add" to="/lenditem" />
+    <q-btn round size="lg" color="brown" icon="add" to="/lend/item" />
   </q-page-sticky>
 </template>
 
