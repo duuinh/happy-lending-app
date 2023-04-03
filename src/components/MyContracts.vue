@@ -19,7 +19,8 @@
               <q-space />
               <q-item-label caption>
                 <div class="q-py-xs">
-                  <b>Borrower:</b> {{ contract.borrower.name }} (📞
+                  <b>Borrower:</b> {{ contract.borrower.name }}<br />
+                  (📞
                   <a :href="`tel:${contract.borrower.phone_no}`">
                     {{ contract.borrower.phone_no }}
                   </a>
@@ -84,7 +85,9 @@
               <q-space />
               <q-item-label caption>
                 <div class="q-py-xs">
-                  <b>Owner:</b> {{ contract.lender.name }} (📞
+                  <b>Owner:</b> {{ contract.lender.name }}
+                  <br />
+                  (📞
                   <a :href="`tel:${contract.lender.phone_no}`">
                     {{ contract.lender.phone_no }}
                   </a>
