@@ -5,7 +5,7 @@
       class="q-pa-md row items-start q-gutter-md"
     >
       <q-card
-        v-for="item in store.items"
+        v-for="item in store.filteredItems"
         :key="item._id"
         class="my-card"
         flat
