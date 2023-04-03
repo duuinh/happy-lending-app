@@ -2,7 +2,7 @@
   <q-page v-if="!userStore.user" class="flex flex-center bg-grey-1">
     Lend an item
   </q-page>
-  <q-page class="flex bg-grey-1">
+  <q-page v-else class="flex bg-grey-1">
     <MyItems></MyItems>
   </q-page>
   <q-page-sticky position="bottom" :offset="[18, 18]">
