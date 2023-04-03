@@ -5,151 +5,162 @@
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/borrow" />
         </q-page-sticky>
-        <div class="column items-center">
+        <div>
           <div class="q-pa-lg text-brown text-center text-weight-bold text-h6">
             I Want To Borrow
           </div>
+          <q-form @submit="sendRequest" class="column items-center">
+            <div class="q-pa-md flex flex-center" style="max-width: 600px">
+              <q-item v-if="itemStore.singleItem">
+                <q-item-section top avatar>
+                  <q-avatar size="100px">
+                    <img :src="itemStore.singleItem.img_url" />
+                  </q-avatar>
+                </q-item-section>
 
-          <div class="q-pa-md flex flex-center" style="max-width: 600px">
-            <q-item v-if="itemStore.singleItem">
-              <q-item-section top avatar>
-                <q-avatar size="100px">
-                  <img :src="itemStore.singleItem.img_url" />
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>{{ itemStore.singleItem.name }}</q-item-label>
-                <q-item-label caption>
-                  Pick-up location:
-                  {{ itemStore.singleItem.lender.location.name }}</q-item-label
-                >
-
-                <q-item-label caption>
-                  Owner: {{ itemStore.singleItem.lender.name }}</q-item-label
-                >
-              </q-item-section>
-            </q-item>
-          </div>
-
-          <div class="q-pa-md" style="max-width: 300px">
-            <q-input
-              filled
-              v-model="form.pick_up_date"
-              label="Pick up date and time"
-            >
-              <template v-slot:prepend>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
+                <q-item-section>
+                  <q-item-label>{{ itemStore.singleItem.name }}</q-item-label>
+                  <q-item-label caption>
+                    Pick-up location:
+                    {{
+                      itemStore.singleItem.lender.location.name
+                    }}</q-item-label
                   >
-                    <q-date v-model="form.pick_up_date" mask="YYYY-MM-DD HH:mm">
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="orange"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
 
-              <template v-slot:append>
-                <q-icon name="access_time" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
+                  <q-item-label caption>
+                    Owner: {{ itemStore.singleItem.lender.name }}</q-item-label
                   >
-                    <q-time
-                      v-model="form.pick_up_date"
-                      mask="YYYY-MM-DD HH:mm"
-                      format24h
+                </q-item-section>
+              </q-item>
+            </div>
+
+            <div class="q-pa-md" style="max-width: 300px">
+              <q-input
+                filled
+                v-model="form.pick_up_date"
+                label="Pick up date and time"
+                :rules="[(val) => !!val || 'Field is required']"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
                     >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="orange"
-                          flat
-                        />
-                      </div>
-                    </q-time>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-          </div>
+                      <q-date
+                        v-model="form.pick_up_date"
+                        mask="YYYY-MM-DD HH:mm"
+                      >
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="orange"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
 
-          <div class="q-pa-md" style="max-width: 300px">
-            <q-input
-              filled
-              v-model="form.return_date"
-              label="Return date and time"
-            >
-              <template v-slot:prepend>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date v-model="form.return_date" mask="YYYY-MM-DD HH:mm">
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-
-              <template v-slot:append>
-                <q-icon name="access_time" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-time
-                      v-model="form.return_date"
-                      mask="YYYY-MM-DD HH:mm"
-                      format24h
+                <template v-slot:append>
+                  <q-icon name="access_time" class="cursor-pointer">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
                     >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-time>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-          </div>
+                      <q-time
+                        v-model="form.pick_up_date"
+                        mask="YYYY-MM-DD HH:mm"
+                        format24h
+                      >
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="orange"
+                            flat
+                          />
+                        </div>
+                      </q-time>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
 
-          <q-btn
-            class="q-mt-md"
-            color="brown"
-            size="lg"
-            text-color="white"
-            unelevated
-            label="Send Request"
-            no-caps
-            @click="sendRequest"
-          />
+            <div class="q-pa-md" style="max-width: 300px">
+              <q-input
+                filled
+                v-model="form.return_date"
+                label="Return date and time"
+                :rules="[(val) => !!val || 'Field is required']"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-date
+                        v-model="form.return_date"
+                        mask="YYYY-MM-DD HH:mm"
+                      >
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+
+                <template v-slot:append>
+                  <q-icon name="access_time" class="cursor-pointer">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-time
+                        v-model="form.return_date"
+                        mask="YYYY-MM-DD HH:mm"
+                        format24h
+                      >
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-time>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
+
+            <q-btn
+              class="q-mt-md"
+              color="brown"
+              size="lg"
+              text-color="white"
+              unelevated
+              label="Send Request"
+              no-caps
+              type="submit"
+            />
+          </q-form>
         </div> </q-page
     ></q-page-container>
   </q-layout>

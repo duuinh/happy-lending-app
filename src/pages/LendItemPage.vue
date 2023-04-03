@@ -7,7 +7,10 @@
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/lend" />
         </q-page-sticky>
-        <div class="q-gutter-y-md column text-center items-center">
+        <q-form
+          @submit="submit"
+          class="q-gutter-y-md column text-center items-center"
+        >
           <q-img :src="form.img_url" spinner-color="white" style="width: 200px">
             <q-btn
               class="absolute all-pointer-events"
@@ -29,6 +32,7 @@
             :dense="dense"
             color="brown"
             placeholder="Name of item"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <q-space />
           <q-btn
@@ -39,9 +43,9 @@
             unelevated
             label="Submit"
             no-caps
-            @click="submit"
+            type="submit"
           />
-        </div>
+        </q-form>
       </q-page>
     </q-page-container>
   </q-layout>

@@ -7,7 +7,8 @@
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/profile" />
         </q-page-sticky>
-        <div>
+        <q-form @submit="register" class="q-gutter-md"
+          >>
           <q-input
             class="q-pa-xs"
             filled
@@ -15,6 +16,7 @@
             v-model="form.name"
             label="Name"
             placeholder="John Doe"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <q-select
             filled
@@ -26,6 +28,7 @@
             emit-value
             label="Location"
             behavior="menu"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <q-input
             class="q-pa-xs"
@@ -34,6 +37,7 @@
             v-model="form.email"
             label="KTH email"
             placeholder="xxx@kth.se"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <q-input
             class="q-pa-xs"
@@ -42,6 +46,7 @@
             v-model="form.phone_no"
             label="Phone No."
             placeholder="+42xxxxxxxx"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <div class="text-red" v-if="err_msg">
             {{ err_msg }}
@@ -54,9 +59,9 @@
             unelevated
             label="Register"
             no-caps
-            @click="register"
+            type="submit"
           />
-        </div> </q-page
+        </q-form> </q-page
     ></q-page-container>
   </q-layout>
 </template>
