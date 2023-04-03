@@ -32,5 +32,8 @@ export const useContractStore = defineStore("contract", {
     async updateContractStatus(id, status) {
       await api.put(`/api/contracts/${id}`, { status });
     },
+    async postContracts(payload) {
+      const { data } = await api.post(`/api/contracts`, payload);
+    },
   },
 });

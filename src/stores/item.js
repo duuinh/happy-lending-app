@@ -6,6 +6,7 @@ const userStore = useUserStore();
 export const useItemStore = defineStore("item", {
   state: () => ({
     items: [],
+    singleItem: null,
     myItems: [],
   }),
   getters: {},
@@ -13,6 +14,11 @@ export const useItemStore = defineStore("item", {
     async fetchItems() {
       const { data } = await api.get(`/api/items`);
       this.items = data;
+    },
+    async fetchItemById(itemId) {
+      const { data } = await api.get(`/api/items/`+ itemId);
+      
+      this.singleItem = data;
     },
     async fetchMyItems() {
       const { data } = await api.get(`/api/items/lender/${userStore.user._id}`);
