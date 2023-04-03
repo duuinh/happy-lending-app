@@ -1,5 +1,5 @@
 const ContractStatusEnum = Object.freeze({
-  created: "created",
+  requested: "requested",
   accepted: "accepted",
   rejected: "rejected",
   closed: "closed",
