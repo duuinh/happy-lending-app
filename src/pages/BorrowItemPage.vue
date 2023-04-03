@@ -34,16 +34,9 @@
                 
               </q-item-section>
 
-              <!-- <q-item-section side top>
-                <q-item-label caption>meta</q-item-label>
-              </q-item-section> -->
+              
             </q-item>
           </div>
-          
-
-          <!-- <q-input v-model="date" filled type="date" hint="Pick up date" />
-
-          <q-input v-model="date" filled type="date" hint="Return date" /> -->
 
           <div class="q-pa-md" style="max-width: 300px">
             <q-input filled v-model="form.pick_up_date" label="Pick up date and time">
