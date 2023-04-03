@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center bg-grey-1">
-    <div class="q-pa-md row items-start q-gutter-md">
+    <div
+      v-if="store.items.length > 0"
+      class="q-pa-md row items-start q-gutter-md"
+    >
       <q-card
         v-for="item in store.items"
         :key="item._id"
@@ -10,7 +13,7 @@
       >
         <q-img :src="item.img_url" />
         <q-badge
-          v-if="(item.status = ItemStatusEnum.available)"
+          v-if="item.status === ItemStatusEnum.available"
           floating
           color="teal"
           >Available</q-badge
@@ -31,6 +34,7 @@
         </q-card-actions>
       </q-card>
     </div>
+    <div v-else>No items available</div>
   </q-page>
   <!-- <q-page-sticky position="bottom" :offset="[18, 18]">
     <q-btn round size="lg" color="brown" icon="add" />
