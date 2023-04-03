@@ -97,6 +97,22 @@ export default defineComponent({
       try {
         $q.loading.show();
         await itemstore.postItems(form.value);
+
+        $q.notify({
+          message: "Item is added",
+          color: "deep-orange",
+          position: "top",
+          actions: [
+            {
+              label: "Dismiss",
+              color: "white",
+              handler: () => {
+                /* ... */
+              },
+            },
+          ],
+        });
+
         router.push("/");
       } catch (err) {
         // err_msg.value = err?.response?.data;

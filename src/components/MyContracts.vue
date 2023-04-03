@@ -9,7 +9,7 @@
         >
           <q-item>
             <q-item-section top thumbnail class="q-ml-none">
-              <q-avatar size="100px">
+              <q-avatar size="80px">
                 <img :src="contract.item.img_url"
               /></q-avatar>
             </q-item-section>
@@ -74,7 +74,7 @@
         >
           <q-item>
             <q-item-section top thumbnail class="q-ml-none">
-              <q-avatar size="100px">
+              <q-avatar size="80px">
                 <img :src="contract.item.img_url" />
               </q-avatar>
             </q-item-section>
@@ -148,13 +148,30 @@ export default defineComponent({
 
     function endContract(id) {
       $q.dialog({
-        title: "Item Returned",
+        title: "My Item is Returned",
+        color: "deep-orange",
         message: "Would you like to end the contract?",
         cancel: true,
         persistent: true,
       }).onOk(async () => {
         $q.loading.show();
         await contractStore.updateContractStatus(id, ContractStatusEnum.closed);
+
+        $q.notify({
+          message: "Lending contract is ended",
+          color: "deep-orange",
+          position: "top",
+          actions: [
+            {
+              label: "Dismiss",
+              color: "white",
+              handler: () => {
+                /* ... */
+              },
+            },
+          ],
+        });
+
         await contractStore.fetchLendingItems();
         $q.loading.hide();
       });

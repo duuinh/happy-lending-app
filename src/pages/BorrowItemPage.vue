@@ -1,10 +1,8 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-page-container>
-      <q-page
-        class="fullscreen bg-orange-3 q-pa-md flex flex-center"       
-      >
-      <!-- class="fullscreen bg-orange-3 text-white text-center q-pa-md flex flex-center"  -->
+      <q-page class="fullscreen bg-orange-3 q-pa-md flex flex-center">
+        <!-- class="fullscreen bg-orange-3 text-white text-center q-pa-md flex flex-center"  -->
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/borrow" />
         </q-page-sticky>
@@ -12,12 +10,12 @@
           <div class="q-pa-lg text-brown text-center text-weight-bold text-h6">
             I Want To Borrow
           </div>
-          
+
           <div class="q-pa-md flex flex-center" style="max-width: 600px">
             <q-item v-if="itemStore.singleItem">
               <q-item-section top avatar>
                 <q-avatar size="100px">
-                  <img :src="itemStore.singleItem.img_url">
+                  <img :src="itemStore.singleItem.img_url" />
                 </q-avatar>
               </q-item-section>
 
@@ -27,11 +25,17 @@
 
               <q-item-section>
                 <q-item-label>{{ itemStore.singleItem.name }}</q-item-label>
-                <q-item-label caption> Pick-up location: {{ itemStore.singleItem.lender.location.name }}</q-item-label>
+                <q-item-label caption>
+                  Pick-up location:
+                  {{ itemStore.singleItem.lender.location.name }}</q-item-label
+                >
 
-                <q-item-label caption> Owner: {{ itemStore.singleItem.lender.name }}</q-item-label> 
-                <q-item-label caption> Email: {{ itemStore.singleItem.lender.email }}</q-item-label> 
-                
+                <q-item-label caption>
+                  Owner: {{ itemStore.singleItem.lender.name }}</q-item-label
+                >
+                <q-item-label caption>
+                  Email: {{ itemStore.singleItem.lender.email }}</q-item-label
+                >
               </q-item-section>
 
               <!-- <q-item-section side top>
@@ -39,20 +43,32 @@
               </q-item-section> -->
             </q-item>
           </div>
-          
 
           <!-- <q-input v-model="date" filled type="date" hint="Pick up date" />
 
           <q-input v-model="date" filled type="date" hint="Return date" /> -->
 
           <div class="q-pa-md" style="max-width: 300px">
-            <q-input filled v-model="form.pick_up_date" label="Pick up date and time">
+            <q-input
+              filled
+              v-model="form.pick_up_date"
+              label="Pick up date and time"
+            >
               <template v-slot:prepend>
                 <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
                     <q-date v-model="form.pick_up_date" mask="YYYY-MM-DD HH:mm">
                       <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
                       </div>
                     </q-date>
                   </q-popup-proxy>
@@ -61,10 +77,23 @@
 
               <template v-slot:append>
                 <q-icon name="access_time" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-time v-model="form.pick_up_date" mask="YYYY-MM-DD HH:mm" format24h>
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-time
+                      v-model="form.pick_up_date"
+                      mask="YYYY-MM-DD HH:mm"
+                      format24h
+                    >
                       <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
                       </div>
                     </q-time>
                   </q-popup-proxy>
@@ -74,13 +103,26 @@
           </div>
 
           <div class="q-pa-md" style="max-width: 300px">
-            <q-input filled v-model="form.return_date" label="Return date and time">
+            <q-input
+              filled
+              v-model="form.return_date"
+              label="Return date and time"
+            >
               <template v-slot:prepend>
                 <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
                     <q-date v-model="form.return_date" mask="YYYY-MM-DD HH:mm">
                       <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
                       </div>
                     </q-date>
                   </q-popup-proxy>
@@ -89,10 +131,23 @@
 
               <template v-slot:append>
                 <q-icon name="access_time" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-time v-model="form.return_date" mask="YYYY-MM-DD HH:mm" format24h>
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-time
+                      v-model="form.return_date"
+                      mask="YYYY-MM-DD HH:mm"
+                      format24h
+                    >
                       <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
                       </div>
                     </q-time>
                   </q-popup-proxy>
@@ -100,7 +155,6 @@
               </template>
             </q-input>
           </div>
-
 
           <q-btn
             class="q-mt-md"
@@ -112,8 +166,7 @@
             no-caps
             @click="sendRequest"
           />
-        </div> 
-      </q-page
+        </div> </q-page
     ></q-page-container>
   </q-layout>
 </template>
@@ -148,8 +201,23 @@ export default defineComponent({
       try {
         $q.loading.show();
         await contractStore.postContracts(form.value);
+
+        $q.notify({
+          message: "Request is sent",
+          color: "deep-orange",
+          position: "top",
+          actions: [
+            {
+              label: "Dismiss",
+              color: "white",
+              handler: () => {
+                /* ... */
+              },
+            },
+          ],
+        });
+
         router.push("/");
-        
       } catch (err) {
         //err_msg.value = err?.response?.data;
       } finally {
@@ -165,14 +233,14 @@ export default defineComponent({
       }
       $q.loading.show();
       await itemStore.fetchItemById(route.params.itemId);
-      form.value.item= itemStore.singleItem._id,
-      form.value.lender=itemStore.singleItem.lender._id,
-      $q.loading.hide();
+      (form.value.item = itemStore.singleItem._id),
+        (form.value.lender = itemStore.singleItem.lender._id),
+        $q.loading.hide();
     });
     // return { itemStore, date: ref('YYYY-MM-DD HH:mm') };
-        //return { err_msg, form, store, login };
+    //return { err_msg, form, store, login };
 
-    return { itemStore, contractStore, date: ref(''), form, sendRequest };
+    return { itemStore, contractStore, date: ref(""), form, sendRequest };
   },
 });
 </script>
