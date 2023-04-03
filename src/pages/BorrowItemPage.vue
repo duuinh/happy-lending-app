@@ -2,7 +2,6 @@
   <q-layout view="hHh lpR fFf">
     <q-page-container>
       <q-page class="fullscreen bg-orange-3 q-pa-md flex flex-center">
-        <!-- class="fullscreen bg-orange-3 text-white text-center q-pa-md flex flex-center"  -->
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/borrow" />
         </q-page-sticky>
@@ -19,10 +18,6 @@
                 </q-avatar>
               </q-item-section>
 
-              <!-- <q-item-section top thumbnail class="q-ml-none">
-                <img :src="itemStore.singleItem.img_url">
-              </q-item-section> -->
-
               <q-item-section>
                 <q-item-label>{{ itemStore.singleItem.name }}</q-item-label>
                 <q-item-label caption>
@@ -34,16 +29,8 @@
                   Owner: {{ itemStore.singleItem.lender.name }}</q-item-label
                 >
               </q-item-section>
-
-              <!-- <q-item-section side top>
-                <q-item-label caption>meta</q-item-label>
-              </q-item-section> -->
             </q-item>
           </div>
-
-          <!-- <q-input v-model="date" filled type="date" hint="Pick up date" />
-
-          <q-input v-model="date" filled type="date" hint="Return date" /> -->
 
           <div class="q-pa-md" style="max-width: 300px">
             <q-input
@@ -63,7 +50,7 @@
                         <q-btn
                           v-close-popup
                           label="Close"
-                          color="primary"
+                          color="orange"
                           flat
                         />
                       </div>
@@ -88,7 +75,7 @@
                         <q-btn
                           v-close-popup
                           label="Close"
-                          color="primary"
+                          color="orange"
                           flat
                         />
                       </div>
@@ -190,8 +177,8 @@ export default defineComponent({
       item: null,
       lender: null,
       borrower: null,
-      pick_up_date: new Date(),
-      return_date: new Date(),
+      pick_up_date: date.formatDate(new Date(), "YYYY-MM-DD HH:mm"),
+      return_date: date.formatDate(new Date(), "YYYY-MM-DD HH:mm"),
     });
     //const err_msg = ref("");
     async function sendRequest() {
@@ -234,10 +221,8 @@ export default defineComponent({
         (form.value.lender = itemStore.singleItem.lender._id),
         $q.loading.hide();
     });
-    // return { itemStore, date: ref('YYYY-MM-DD HH:mm') };
-    //return { err_msg, form, store, login };
 
-    return { itemStore, contractStore, date: ref(""), form, sendRequest };
+    return { itemStore, contractStore, form, sendRequest };
   },
 });
 </script>
