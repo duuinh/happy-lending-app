@@ -9,7 +9,13 @@
         bordered
       >
         <q-img :src="item.img_url" />
-
+        <q-badge
+          v-if="(item.status = ItemStatusEnum.available)"
+          floating
+          color="teal"
+          >Available</q-badge
+        >
+        <q-badge v-else floating color="red">Not Available</q-badge>
         <q-card-section class="q-py-xs">
           <div class="text-overline text-orange-9">
             {{ item.lender.location.name }}
@@ -35,6 +41,7 @@
 import { useQuasar } from "quasar";
 import { defineComponent, onMounted } from "vue";
 import { useItemStore } from "stores/item";
+import { ItemStatusEnum } from "../enums";
 
 export default defineComponent({
   name: "BorrowPage",
@@ -48,6 +55,7 @@ export default defineComponent({
     });
     return {
       store,
+      ItemStatusEnum,
     };
   },
 });
