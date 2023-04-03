@@ -12,13 +12,7 @@
         bordered
       >
         <q-img :src="item.img_url" />
-        <q-badge
-          v-if="item.status === ItemStatusEnum.available"
-          floating
-          color="teal"
-          >Available</q-badge
-        >
-        <q-badge v-else floating color="red">Not Available</q-badge>
+
         <q-card-section class="q-py-xs">
           <div class="text-overline text-orange-9">
             {{ item.lender.location.name }}
@@ -30,8 +24,7 @@
           <q-btn flat round color="red-2" icon="bookmark" />
           <q-btn flat round color="black" icon="share" />
           <q-space />
-          <q-btn flat color="brown" label="Borrow" 
-          :to="`borrow/${item._id}`" />
+          <q-btn flat color="brown" label="Borrow" :to="`borrow/${item._id}`" />
         </q-card-actions>
       </q-card>
     </div>
