@@ -33,9 +33,6 @@
                 <q-item-label caption>
                   Owner: {{ itemStore.singleItem.lender.name }}</q-item-label
                 >
-                <q-item-label caption>
-                  Email: {{ itemStore.singleItem.lender.email }}</q-item-label
-                >
               </q-item-section>
 
               <!-- <q-item-section side top>
