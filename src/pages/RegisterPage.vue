@@ -45,7 +45,7 @@
             color="brown"
             v-model="form.phone_no"
             label="Phone No."
-            placeholder="+42xxxxxxxx"
+            placeholder="+46xxxxxxxx"
             :rules="[(val) => !!val || 'Field is required']"
           />
           <div class="text-red" v-if="err_msg">

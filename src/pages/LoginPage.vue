@@ -25,7 +25,7 @@
             color="brown"
             v-model="form.phone_no"
             label="Phone No."
-            placeholder="+42xxxxxxxx"
+            placeholder="+46xxxxxxxx"
           />
           <div class="text-red" v-if="err_msg">
             {{ err_msg }}
