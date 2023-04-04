@@ -62,6 +62,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { useItemStore } from "../stores/item";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
+import Compressor from "compressorjs";
 
 export default defineComponent({
   name: "LendItemPage",
@@ -79,6 +80,16 @@ export default defineComponent({
 
     const itemstore = useItemStore();
     function onFileChange(file) {
+      new Compressor(file, {
+        quality: 0.8,
+        maxWidth: 800,
+        success(result) {
+          form.value.file = new File([result], file.name);
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
       form.value.img_url = URL.createObjectURL(file);
     }
     async function submit() {
