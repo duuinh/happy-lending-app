@@ -8,7 +8,7 @@
           </q-avatar>
           HappyLending
         </q-toolbar-title>
-        <notification-menu></notification-menu>
+        <notification-menu v-if="userStore.user"></notification-menu>
       </q-toolbar>
     </q-header>
 
@@ -49,6 +49,7 @@
 <script>
 import NotificationMenu from "src/components/NotificationMenu.vue";
 import { defineComponent, ref } from "vue";
+import { useUserStore } from "../stores/user";
 
 export default defineComponent({
   components: { NotificationMenu },
@@ -56,6 +57,7 @@ export default defineComponent({
   setup() {
     return {
       tab: ref("home"),
+      userStore: useUserStore(),
     };
   },
 });
