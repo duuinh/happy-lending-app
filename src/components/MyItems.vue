@@ -11,7 +11,7 @@
           <q-item-section>
             <q-item-label>{{ item.name }}</q-item-label>
             <q-space />
-            <q-item-label caption>
+            <!-- <q-item-label caption>
               Status:
               <q-badge
                 v-if="item.status === ItemStatusEnum.available"
@@ -22,7 +22,7 @@
               <div v-if="item.status === ItemStatusEnum.notAvailable">
                 borrowed by xxx
               </div>
-            </q-item-label>
+            </q-item-label> -->
           </q-item-section>
 
           <q-item-section side top>
