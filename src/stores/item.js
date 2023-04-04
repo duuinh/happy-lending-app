@@ -35,7 +35,17 @@ export const useItemStore = defineStore("item", {
       this.myItems = data;
     },
     async postItems(payload) {
-      const { data } = await api.post(`/api/items`, payload);
+      let { data } = await api.post(
+        `/api/upload`,
+        { file: payload.file },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      payload.img_url = data.url;
+      await api.post(`/api/items`, payload);
     },
   },
 });

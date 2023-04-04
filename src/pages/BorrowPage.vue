@@ -21,7 +21,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat round color="red-2" icon="bookmark" />
+          <!-- <q-btn flat round color="red-2" icon="bookmark" /> -->
           <q-btn flat round color="black" icon="share" />
           <q-space />
           <q-btn flat color="brown" label="Borrow" :to="`borrow/${item._id}`" />
