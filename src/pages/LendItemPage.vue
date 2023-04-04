@@ -21,6 +21,8 @@
             label="Upload Image"
             :rules="[(val) => !!val || 'Image is required']"
             class="q-pb-xs"
+            :filter="checkFileType"
+            @rejected="onRejected"
             style="width: 200px"
           >
             <template v-slot:prepend>
@@ -60,6 +62,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { useItemStore } from "../stores/item";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
+import Compressor from "compressorjs";
 
 export default defineComponent({
   name: "LendItemPage",
@@ -77,6 +80,16 @@ export default defineComponent({
 
     const itemstore = useItemStore();
     function onFileChange(file) {
+      new Compressor(file, {
+        quality: 0.8,
+        maxWidth: 800,
+        success(result) {
+          form.value.file = new File([result], file.name);
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
       form.value.img_url = URL.createObjectURL(file);
     }
     async function submit() {
@@ -115,7 +128,23 @@ export default defineComponent({
       }
     });
 
-    return { form, submit, userStore, onFileChange };
+    return {
+      form,
+      submit,
+      userStore,
+      onFileChange,
+      checkFileType(files) {
+        return files.filter(
+          (file) => file.type === "image/png" || file.type === "image/jpeg"
+        );
+      },
+      onRejected(rejectedEntries) {
+        $q.notify({
+          type: "negative",
+          message: `upload image only (.jpg or .png)`,
+        });
+      },
+    };
   },
 });
 </script>
