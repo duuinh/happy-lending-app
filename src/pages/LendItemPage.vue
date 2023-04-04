@@ -12,29 +12,32 @@
           class="q-gutter-y-md column text-center items-center"
         >
           <q-img :src="form.img_url" spinner-color="white" style="width: 200px">
-            <q-btn
-              class="absolute all-pointer-events"
-              icon="add_a_photo"
-              color="grey"
-              round
-              size="xs"
-              style="bottom: 8px; right: 8px"
-            >
-              <q-tooltip> Upload Image </q-tooltip>
-            </q-btn>
           </q-img>
+
+          <q-file
+            v-model="form.file"
+            filled
+            @update:model-value="onFileChange($event)"
+            label="Upload Image"
+            :rules="[(val) => !!val || 'Image is required']"
+            class="q-pb-xs"
+            style="width: 200px"
+          >
+            <template v-slot:prepend>
+              <q-icon name="add_a_photo" />
+            </template>
+          </q-file>
 
           <q-input
             v-model="form.name"
             filled
             label="What do you want to lend?"
             stack-label
-            :dense="dense"
             color="brown"
             placeholder="Name of item"
+            style="width: 200px"
             :rules="[(val) => !!val || 'Field is required']"
           />
-          <q-space />
           <q-btn
             class="q-mt-md"
             color="brown"
@@ -69,9 +72,13 @@ export default defineComponent({
       img_url:
         "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
       lender: "",
+      file: null,
     });
 
     const itemstore = useItemStore();
+    function onFileChange(file) {
+      form.value.img_url = URL.createObjectURL(file);
+    }
     async function submit() {
       try {
         $q.loading.show();
@@ -92,7 +99,7 @@ export default defineComponent({
           ],
         });
 
-        router.push("/");
+        router.push("/lend");
       } catch (err) {
         // err_msg.value = err?.response?.data;
       } finally {
@@ -108,7 +115,7 @@ export default defineComponent({
       }
     });
 
-    return { form, submit, userStore };
+    return { form, submit, userStore, onFileChange };
   },
 });
 </script>
