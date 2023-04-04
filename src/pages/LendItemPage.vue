@@ -21,6 +21,8 @@
             label="Upload Image"
             :rules="[(val) => !!val || 'Image is required']"
             class="q-pb-xs"
+            :filter="checkFileType"
+            @rejected="onRejected"
             style="width: 200px"
           >
             <template v-slot:prepend>
@@ -115,7 +117,23 @@ export default defineComponent({
       }
     });
 
-    return { form, submit, userStore, onFileChange };
+    return {
+      form,
+      submit,
+      userStore,
+      onFileChange,
+      checkFileType(files) {
+        return files.filter(
+          (file) => file.type === "image/png" || file.type === "image/jpeg"
+        );
+      },
+      onRejected(rejectedEntries) {
+        $q.notify({
+          type: "negative",
+          message: `upload image only (.jpg or .png)`,
+        });
+      },
+    };
   },
 });
 </script>
