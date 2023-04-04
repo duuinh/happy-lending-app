@@ -11,6 +11,10 @@ export const useContractStore = defineStore("contract", {
     requests: [],
   }),
   getters: {
+    requestedLendingContracts: (state) =>
+      state.lendingContracts.filter(
+        (contract) => contract.status === ContractStatusEnum.requested
+      ),
     acceptedLendingContracts: (state) =>
       state.lendingContracts.filter(
         (contract) => contract.status === ContractStatusEnum.accepted
