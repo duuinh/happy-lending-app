@@ -31,7 +31,7 @@
           </q-file>
 
           <q-input
-            v-model="form.name"
+            v-model.trim="form.name"
             filled
             label="What do you want to lend?"
             stack-label
