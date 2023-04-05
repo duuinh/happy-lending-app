@@ -1,11 +1,32 @@
 <template>
   <q-page class="flex flex-center bg-grey-1">
     <div
-      v-if="store.items.length > 0"
+      v-if="store.filteredItems.length > 0"
       class="q-pa-md row items-start q-gutter-md"
     >
+      <q-input
+        bottom-slots
+        v-model="search"
+        label="Search"
+        maxlength="100"
+        filled
+        color="orange"
+        class="q-pt-md"
+        style="width: 97%"
+        @update:model-value="searchItem($event)"
+      >
+        <template v-slot:append>
+          <q-icon
+            v-if="search !== ''"
+            name="close"
+            @click="search = ''"
+            class="cursor-pointer"
+          />
+          <q-icon name="search" />
+        </template>
+      </q-input>
       <q-card
-        v-for="item in store.filteredItems"
+        v-for="item in displayedItems"
         :key="item._id"
         class="my-card"
         flat
@@ -37,7 +58,7 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { useItemStore } from "stores/item";
 import { ItemStatusEnum } from "../enums";
 
@@ -46,15 +67,26 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const store = useItemStore();
+    const displayedItems = ref([]);
     onMounted(async () => {
       $q.loading.show();
       await store.fetchItems();
+      displayedItems.value = store.filteredItems;
       $q.loading.hide();
     });
+
+    function searchItem(value) {
+      displayedItems.value = store.filteredItems.filter((item) =>
+        item.name.toLowerCase().includes(value.toLowerCase())
+      );
+    }
 
     return {
       store,
       ItemStatusEnum,
+      search: ref(""),
+      displayedItems,
+      searchItem,
     };
   },
 });
