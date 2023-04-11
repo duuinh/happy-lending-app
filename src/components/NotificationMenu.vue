@@ -1,11 +1,5 @@
 <template>
-  <q-btn
-    v-if="userStore.user"
-    round
-    dense
-    flat
-    color="grey-8"
-    icon="notifications"
+  <q-btn round dense flat color="grey-8" icon="notifications"
     ><q-badge color="red" text-color="white" floating
       >{{ contractStore.requestedLendingContracts.length }}
     </q-badge>

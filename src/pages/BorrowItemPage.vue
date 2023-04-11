@@ -50,7 +50,7 @@
                     >
                       <q-date
                         v-model="form.pick_up_date"
-                        mask="YYYY-MM-DD HH:mm"
+                        mask="YYYY-MM-DD HH:mm Z"
                       >
                         <div class="row items-center justify-end">
                           <q-btn
@@ -74,8 +74,7 @@
                     >
                       <q-time
                         v-model="form.pick_up_date"
-                        mask="YYYY-MM-DD HH:mm"
-                        format24h
+                        mask="YYYY-MM-DD HH:mm Z"
                       >
                         <div class="row items-center justify-end">
                           <q-btn
@@ -108,7 +107,7 @@
                     >
                       <q-date
                         v-model="form.return_date"
-                        mask="YYYY-MM-DD HH:mm"
+                        mask="YYYY-MM-DD HH:mm Z"
                       >
                         <div class="row items-center justify-end">
                           <q-btn
@@ -132,8 +131,7 @@
                     >
                       <q-time
                         v-model="form.return_date"
-                        mask="YYYY-MM-DD HH:mm"
-                        format24h
+                        mask="YYYY-MM-DD HH:mm Z"
                       >
                         <div class="row items-center justify-end">
                           <q-btn
@@ -188,8 +186,8 @@ export default defineComponent({
       item: null,
       lender: null,
       borrower: null,
-      pick_up_date: date.formatDate(new Date(), "YYYY-MM-DD HH:mm"),
-      return_date: date.formatDate(new Date(), "YYYY-MM-DD HH:mm"),
+      pick_up_date: date.formatDate(Date.now(), "YYYY-MM-DD HH:mm Z"),
+      return_date: date.formatDate(Date.now(), "YYYY-MM-DD HH:mm Z"),
     });
     //const err_msg = ref("");
     async function sendRequest() {
