@@ -3,7 +3,7 @@ import { api } from "../boot/axios";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    user: JSON.parse(localStorage.getItem("user")),
+    user: null,
   }),
 
   getters: {},
