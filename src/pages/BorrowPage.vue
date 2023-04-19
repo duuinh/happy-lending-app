@@ -13,7 +13,6 @@
         color="orange"
         class="q-pt-md"
         style="width: 97%"
-        @update:model-value="searchItem($event)"
       >
         <template v-slot:append>
           <q-icon
@@ -43,7 +42,14 @@
 
         <q-card-actions align="right">
           <!-- <q-btn flat round color="red-2" icon="bookmark" /> -->
-          <q-btn flat round color="black" icon="share" />
+          <q-btn
+            v-if="navigator.share"
+            flat
+            round
+            color="black"
+            icon="share"
+            @click="share(item.name)"
+          />
           <q-space />
           <q-btn flat color="brown" label="Borrow" :to="`borrow/${item._id}`" />
         </q-card-actions>
@@ -58,9 +64,10 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watchEffect } from "vue";
 import { useItemStore } from "stores/item";
 import { ItemStatusEnum } from "../enums";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "BorrowPage",
@@ -68,25 +75,52 @@ export default defineComponent({
     const $q = useQuasar();
     const store = useItemStore();
     const displayedItems = ref([]);
+    const route = new useRoute();
+    const router = new useRouter();
+    const search = ref(route.query.item);
     onMounted(async () => {
       $q.loading.show();
       await store.fetchItems();
       displayedItems.value = store.filteredItems;
+      searchItem(search.value);
       $q.loading.hide();
     });
 
+    watchEffect(() => searchItem(search.value));
+
     function searchItem(value) {
-      displayedItems.value = store.filteredItems.filter((item) =>
-        item.name.toLowerCase().includes(value.toLowerCase())
-      );
+      if (value) {
+        displayedItems.value = store.filteredItems.filter((item) =>
+          item.name.toLowerCase().includes(value.toLowerCase())
+        );
+        router.replace({ query: { item: search.value } });
+      } else {
+        displayedItems.value = store.filteredItems;
+        router.replace({ query: null });
+      }
+    }
+
+    function share(itemName) {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: "HappyLending",
+            text: `Hey there! Have you heard of HappyLending? I just stumbled upon this amazing ${itemName} and had to share it with you! Check it out on ${process.env.VUE_APP_DOMAIN} - HappyLending's the go-to platform for borrowing and lending mattress, screwdriver, and whatever!`,
+            url: `${process.env.VUE_APP_DOMAIN}/borrow?item=${itemName}`,
+          })
+          .then(() => console.log("Successful share"))
+          .catch((error) => console.log("Error sharing", error));
+      }
     }
 
     return {
       store,
       ItemStatusEnum,
-      search: ref(""),
+      search,
       displayedItems,
       searchItem,
+      share,
+      navigator,
     };
   },
 });
