@@ -14,7 +14,12 @@
             Location: {{ store.user.location.name }}
           </div>
           <div class="q-pa-lg q-gutter-sm">
-            <q-btn color="brown-5" label="Update Profile" to="/profile/edit" />
+            <q-btn
+              unelevated
+              color="brown-5"
+              label="Update Profile"
+              to="/profile/edit"
+            />
             <q-btn
               unelevated
               outline
@@ -35,6 +40,11 @@
             />
           </div>
         </div>
+        <a href="https://www.buymeacoffee.com/HappyLending"
+          ><img
+            class="q-pt-xl"
+            src="https://img.buymeacoffee.com/button-api/?text=Buy us a coffee&emoji=&slug=HappyLending&button_colour=d2a07f&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff"
+        /></a>
       </div>
     </q-page>
   </q-layout>
