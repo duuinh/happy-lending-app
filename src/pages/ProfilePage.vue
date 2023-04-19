@@ -7,10 +7,8 @@
           <q-avatar size="72px" color="brown" text-color="white">
             {{ store.user.name[0] }}
           </q-avatar>
-          <div class="text-subtitle1 q-mt-md q-mb-xs">
-            {{ store.user.name }} (📞{{ store.user.phone_no }})
-          </div>
-          <div class="text-subtitle1 q-mt-md q-mb-xs">
+          <div class="text-subtitle1 text-center q-mt-md q-mb-xs">
+            {{ store.user.name }} (📞{{ store.user.phone_no }}) <br />
             Location: {{ store.user.location.name }}
           </div>
           <div class="q-pa-lg q-gutter-sm">
