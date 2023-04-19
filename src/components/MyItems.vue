@@ -27,17 +27,15 @@
               dayjs(item.updatedAt).fromNow()
             }}</q-item-label>
 
-            <div class="text-grey-8 q-gutter-xs">
+            <div class="text-grey-8 q-gutter-xs q-pt-xs">
               <q-btn
-                class="gt-xs"
-                size="12px"
                 flat
                 dense
                 round
                 :icon="
                   item.status === ItemStatusEnum.unlisted
-                    ? 'visibility'
-                    : 'visibility_off'
+                    ? 'visibility_off'
+                    : 'visibility'
                 "
                 @click="
                   item.status === ItemStatusEnum.unlisted
@@ -49,6 +47,7 @@
                 v-if="navigator.share"
                 flat
                 round
+                dense
                 color="black"
                 icon="share"
                 :disable="item.status === ItemStatusEnum.unlisted"
