@@ -3,21 +3,25 @@ import { api } from "../boot/axios";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    user: JSON.parse(localStorage.getItem("user")),
+    user: null,
   }),
 
   getters: {},
 
   actions: {
-    async login(payload) {
-      const { data } = await api.post(`/api/users/login`, payload);
+    async findByEmail(email) {
+      const { data } = await api.get(`/api/users/find/${email}`);
       this.user = data;
-      localStorage.setItem("user", JSON.stringify(data));
     },
-    async register(payload) {
-      const { data } = await api.post(`/api/users`, payload);
+    async add(payload) {
+      const res = await api.post(`/api/users`, payload);
+      const { data } = await api.get(`/api/users/${res.data._id}`);
       this.user = data;
-      localStorage.setItem("user", JSON.stringify(data));
+    },
+    async update(payload, id) {
+      const res = await api.put(`/api/users/${id}`, payload);
+      const { data } = await api.get(`/api/users/${res.data._id}`);
+      this.user = data;
     },
   },
 });

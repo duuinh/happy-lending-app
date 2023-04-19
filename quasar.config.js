@@ -23,7 +23,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["i18n", "axios"],
+    boot: ["i18n", "axios", "firebase"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -98,7 +98,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Loading"],
+      plugins: ["Loading", "Dialog", "Notify"],
     },
 
     // animations: 'all', // --- includes all animations
@@ -154,18 +154,38 @@ module.exports = configure(function (ctx) {
         theme_color: "#027be3",
         icons: [
           {
+            src: "icons/icon-48x48.png",
+            sizes: "48x48",
+            type: "image/png",
+          },
+          {
+            src: "icons/icon-72x72.png",
+            sizes: "72x72",
+            type: "image/png",
+          },
+          {
+            src: "icons/icon-96x96.png",
+            sizes: "96x96",
+            type: "image/png",
+          },
+          {
             src: "icons/icon-128x128.png",
             sizes: "128x128",
             type: "image/png",
           },
           {
-            src: "icons/icon-192x192.png",
-            sizes: "192x192",
+            src: "icons/icon-144x144.png",
+            sizes: "144x144",
             type: "image/png",
           },
           {
-            src: "icons/icon-256x256.png",
-            sizes: "256x256",
+            src: "icons/icon-152x152.png",
+            sizes: "152x152",
+            type: "image/png",
+          },
+          {
+            src: "icons/icon-192x192.png",
+            sizes: "192x192",
             type: "image/png",
           },
           {

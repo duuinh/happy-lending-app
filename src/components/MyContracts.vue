@@ -1,6 +1,71 @@
 <template>
   <div class="q-pa-md full-width">
     <q-list padding>
+      <q-item-label header>Borrowing Requests</q-item-label>
+      <div v-if="contractStore.requestedLendingContracts.length">
+        <template
+          v-for="contract in contractStore.requestedLendingContracts"
+          :key="contract._id"
+        >
+          <q-item>
+            <q-item-section top thumbnail class="q-ml-none">
+              <q-avatar>
+                <img :src="contract.item.img_url" />
+              </q-avatar>
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label lines="1"
+                >Can I borrow your {{ contract.item.name }}?</q-item-label
+              >
+              <q-space />
+              <q-item-label caption>
+                <div class="q-py-xs">
+                  {{ contract.borrower.name }} want to borrow your
+                  {{ contract.item.name }} from
+                  {{
+                    dayjs(contract.pick_up_date).format(
+                      "MMM DD, YYYY (ddd), hh:mm A"
+                    )
+                  }}
+                  to
+                  {{
+                    dayjs(contract.return_date).format(
+                      "MMM DD, YYYY (ddd),  hh:mm A"
+                    )
+                  }}
+                </div>
+              </q-item-label>
+            </q-item-section>
+
+            <q-item-section side top>
+              <q-item-label caption>{{
+                dayjs(contract.updatedAt).fromNow()
+              }}</q-item-label>
+              <q-btn size="12px" flat dense round icon="more_vert">
+                <q-menu>
+                  <q-list bordered="">
+                    <q-item clickable v-ripple @click="accept(contract._id)">
+                      <q-item-section avatar>
+                        <q-icon color="green" name="check_circle" />
+                      </q-item-section>
+                      <q-item-section>Accept</q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="reject(contract._id)">
+                      <q-item-section avatar>
+                        <q-icon color="red" name="delete" />
+                      </q-item-section>
+                      <q-item-section>Reject</q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+            </q-item-section>
+          </q-item>
+          <q-separator spaced />
+        </template>
+      </div>
+      <div v-else class="flex flex-center text-grey">No Borrowing Requests</div>
       <q-item-label header>Lending Items</q-item-label>
       <div v-if="contractStore.acceptedLendingContracts.length">
         <template
@@ -9,7 +74,7 @@
         >
           <q-item>
             <q-item-section top thumbnail class="q-ml-none">
-              <q-avatar size="100px">
+              <q-avatar size="80px">
                 <img :src="contract.item.img_url"
               /></q-avatar>
             </q-item-section>
@@ -19,9 +84,12 @@
               <q-space />
               <q-item-label caption>
                 <div class="q-py-xs">
-                  <b>Borrower:</b> {{ contract.borrower.name }} (📞{{
-                    contract.borrower.phone_no
-                  }})
+                  <b>Borrower:</b> {{ contract.borrower.name }}<br />
+                  (📞
+                  <a :href="`tel:${contract.borrower.phone_no}`">
+                    {{ contract.borrower.phone_no }}
+                  </a>
+                  )
                 </div>
                 <div class="text-weight-bold">Pick-up date:</div>
                 <div class="q-pb-xs">
@@ -47,13 +115,14 @@
                 dayjs(contract.updatedAt).fromNow()
               }}</q-item-label>
               <q-btn
+                outline
                 color="deep-orange-5"
                 class="q-mt-md"
                 @click="endContract(contract._id)"
               >
                 <div class="row items-center no-wrap">
                   <div class="text-center">
-                    <q-icon name="task_alt" /> <br />End
+                    <q-icon name="assignment_returned" />
                   </div>
                 </div>
               </q-btn>
@@ -71,7 +140,7 @@
         >
           <q-item>
             <q-item-section top thumbnail class="q-ml-none">
-              <q-avatar size="100px">
+              <q-avatar size="80px">
                 <img :src="contract.item.img_url" />
               </q-avatar>
             </q-item-section>
@@ -81,9 +150,13 @@
               <q-space />
               <q-item-label caption>
                 <div class="q-py-xs">
-                  <b>Owner:</b> {{ contract.lender.name }} (📞{{
-                    contract.lender.phone_no
-                  }})
+                  <b>Owner:</b> {{ contract.lender.name }}
+                  <br />
+                  (📞
+                  <a :href="`tel:${contract.lender.phone_no}`">
+                    {{ contract.lender.phone_no }}
+                  </a>
+                  )
                 </div>
                 <div class="q-py-xs"><b>Status:</b> {{ contract.status }}</div>
                 <div class="text-weight-bold">Pick-up date:</div>
@@ -141,13 +214,83 @@ export default defineComponent({
       $q.loading.hide();
     });
 
-    async function endContract(id) {
+    function endContract(id) {
+      $q.dialog({
+        title: "My Item is Returned",
+        color: "deep-orange",
+        message: "Would you like to end the contract?",
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        $q.loading.show();
+        await contractStore.updateContractStatus(id, ContractStatusEnum.closed);
+
+        $q.notify({
+          message: "Lending contract is ended",
+          color: "deep-orange",
+          position: "top",
+          actions: [
+            {
+              label: "Dismiss",
+              color: "white",
+              handler: () => {
+                /* ... */
+              },
+            },
+          ],
+        });
+
+        await contractStore.fetchLendingItems();
+        $q.loading.hide();
+      });
+    }
+
+    async function accept(id) {
       $q.loading.show();
-      await contractStore.updateContractStatus(id, ContractStatusEnum.closed);
+      await contractStore.updateContractStatus(id, ContractStatusEnum.accepted);
+
+      $q.notify({
+        message: "Borrowing request is accepted",
+        color: "deep-orange",
+        position: "top",
+        actions: [
+          {
+            label: "Dismiss",
+            color: "white",
+            handler: () => {
+              /* ... */
+            },
+          },
+        ],
+      });
+
       await contractStore.fetchLendingItems();
       $q.loading.hide();
     }
-    return { contractStore, dayjs, endContract };
+
+    async function reject(id) {
+      $q.loading.show();
+      await contractStore.updateContractStatus(id, ContractStatusEnum.rejected);
+
+      $q.notify({
+        message: "Borrowing request is rejected",
+        color: "deep-orange",
+        position: "top",
+        actions: [
+          {
+            label: "Dismiss",
+            color: "white",
+            handler: () => {
+              /* ... */
+            },
+          },
+        ],
+      });
+
+      await contractStore.fetchLendingItems();
+      $q.loading.hide();
+    }
+    return { contractStore, dayjs, endContract, accept, reject };
   },
 });
 </script>

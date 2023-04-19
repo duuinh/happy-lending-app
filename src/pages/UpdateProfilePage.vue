@@ -7,14 +7,18 @@
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/profile" />
         </q-page-sticky>
-        <div>
+        <q-form @submit="save" class="q-gutter-md">
+          <div class="q-pa-lg text-brown text-weight-bold text-h6">
+            Update Profile
+          </div>
           <q-input
             class="q-pa-xs"
             filled
             color="brown"
-            v-model="form.name"
+            v-model.trim="form.name"
             label="Name"
             placeholder="John Doe"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <q-select
             filled
@@ -26,22 +30,17 @@
             emit-value
             label="Location"
             behavior="menu"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <q-input
             class="q-pa-xs"
             filled
             color="brown"
-            v-model="form.email"
-            label="KTH email"
-            placeholder="xxx@kth.se"
-          />
-          <q-input
-            class="q-pa-xs"
-            filled
-            color="brown"
-            v-model="form.phone_no"
+            type="number"
+            v-model.trim="form.phone_no"
             label="Phone No."
-            placeholder="+42xxxxxxxx"
+            placeholder="+46xxxxxxxx"
+            :rules="[(val) => !!val || 'Field is required']"
           />
           <div class="text-red" v-if="err_msg">
             {{ err_msg }}
@@ -52,11 +51,11 @@
             size="lg"
             text-color="white"
             unelevated
-            label="Register"
+            label="Save"
             no-caps
-            @click="register"
+            type="submit"
           />
-        </div> </q-page
+        </q-form> </q-page
     ></q-page-container>
   </q-layout>
 </template>
@@ -67,9 +66,10 @@ import { defineComponent, ref, onMounted } from "vue";
 import { useUserStore } from "../stores/user";
 import { useLocationStore } from "../stores/location";
 import { useRouter } from "vue-router";
+import { getAuth } from "firebase/auth";
 
 export default defineComponent({
-  name: "RegisterPage",
+  name: "UpdateProfilePage",
   setup() {
     const router = useRouter();
     const $q = useQuasar();
@@ -77,19 +77,21 @@ export default defineComponent({
     const locationStore = useLocationStore();
     let locationOptions = ref([]);
     const form = ref({
-      location: "",
-      name: "",
-      email: "",
-      phone_no: "",
+      location: userStore.user?.location._id,
+      name: userStore.user?.name,
+      phone_no: userStore.user?.phone_no,
     });
     const err_msg = ref("");
-    async function register() {
+    async function save() {
       try {
         $q.loading.show();
-        await userStore.register(form.value);
+        const auth = getAuth();
         if (userStore.user) {
-          router.push("/profile");
+          await userStore.update(form.value, userStore.user._id);
+        } else {
+          await userStore.add({ ...form.value, email: auth.currentUser.email });
         }
+        router.push("/profile");
       } catch (err) {
         err_msg.value = err?.response?.data;
       } finally {
@@ -107,9 +109,7 @@ export default defineComponent({
       );
       $q.loading.hide();
     });
-    return { err_msg, form, register, locationOptions };
+    return { err_msg, form, save, locationOptions };
   },
 });
 </script>
-
-// TODO: e-mail validate, check if the email is already registered

@@ -9,15 +9,25 @@ export const useItemStore = defineStore("item", {
     singleItem: null,
     myItems: [],
   }),
-  getters: {},
+  getters: {
+    filteredItems: (state) => {
+      if (userStore.user) {
+        return state.items.filter(
+          (item) => item.lender._id !== userStore.user._id
+        );
+      } else {
+        return state.items;
+      }
+    },
+  },
   actions: {
     async fetchItems() {
       const { data } = await api.get(`/api/items`);
       this.items = data;
     },
     async fetchItemById(itemId) {
-      const { data } = await api.get(`/api/items/`+ itemId);
-      
+      const { data } = await api.get(`/api/items/` + itemId);
+
       this.singleItem = data;
     },
     async fetchMyItems() {
@@ -25,7 +35,20 @@ export const useItemStore = defineStore("item", {
       this.myItems = data;
     },
     async postItems(payload) {
-      const { data } = await api.post(`/api/items`, payload);
+      let { data } = await api.post(
+        `/api/upload`,
+        { file: payload.file },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      payload.img_url = data.url;
+      await api.post(`/api/items`, payload);
+    },
+    async updateStatus(id, status) {
+      await api.put(`/api/items/${id}`, { status });
     },
   },
 });

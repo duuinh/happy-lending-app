@@ -1,6 +1,7 @@
 const ItemStatusEnum = Object.freeze({
   available: "available",
-  notAvailable: "not_available",
+  unavailable: "unavailable",
+  unlisted: "unlisted",
 });
 
 export default ItemStatusEnum;

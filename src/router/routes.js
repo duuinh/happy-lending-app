@@ -10,8 +10,9 @@ const routes = [
     ],
   },
   {
-    path: "/register",
-    component: () => import("pages/RegisterPage.vue"),
+    path: "/profile/edit",
+    component: () => import("pages/UpdateProfilePage.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/login",
@@ -19,15 +20,16 @@ const routes = [
   },
 
   {
-    path: "/lenditem",
+    path: "/lend/item",
     component: () => import("pages/LendItemPage.vue"),
+    meta: { requiresAuth: true },
   },
 
-  { 
-    path: "/borrow/:itemId", 
-    component: () => import("pages/BorrowItemPage.vue") 
+  {
+    path: "/borrow/:itemId",
+    component: () => import("pages/BorrowItemPage.vue"),
+    meta: { requiresAuth: true },
   },
-
 
   // Always leave this as last one,
   // but you can also remove it
