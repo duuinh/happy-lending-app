@@ -33,7 +33,8 @@
             <q-btn
               unelevated
               color="brown-5"
-              label="Login/Register"
+              label="Login | Register"
+              no-caps
               to="/login"
             />
           </div>
