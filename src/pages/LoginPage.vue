@@ -11,8 +11,14 @@
           @submit="isLinkValid ? login() : sendSignInLink()"
           class="q-gutter-md"
         >
-          <div class="q-pa-lg text-brown text-weight-bold text-h6">
+          <div
+            v-if="!isLinkValid"
+            class="q-pa-lg text-brown text-weight-bold text-h6"
+          >
             A magic link for login will be sent to your email...✨
+          </div>
+          <div v-else class="q-pa-lg text-brown text-weight-bold text-h6">
+            Please login...
           </div>
 
           <q-input
