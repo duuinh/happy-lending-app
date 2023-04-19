@@ -42,7 +42,14 @@
 
         <q-card-actions align="right">
           <!-- <q-btn flat round color="red-2" icon="bookmark" /> -->
-          <q-btn flat round color="black" icon="share" />
+          <q-btn
+            v-if="navigator.share"
+            flat
+            round
+            color="black"
+            icon="share"
+            @click="share(item.name)"
+          />
           <q-space />
           <q-btn flat color="brown" label="Borrow" :to="`borrow/${item._id}`" />
         </q-card-actions>
@@ -94,7 +101,16 @@ export default defineComponent({
     }
 
     function share(itemName) {
-      // route.query.item;
+      if (navigator.share) {
+        navigator
+          .share({
+            title: "HappyLending",
+            text: `Hey there! Have you heard of HappyLending? I just stumbled upon this amazing ${itemName} and had to share it with you! Check it out on ${process.env.VUE_APP_DOMAIN} - HappyLending's the go-to platform for borrowing and lending mattress, screwdriver, and whatever!`,
+            url: `${process.env.VUE_APP_DOMAIN}/borrow?item=${itemName}`,
+          })
+          .then(() => console.log("Successful share"))
+          .catch((error) => console.log("Error sharing", error));
+      }
     }
 
     return {
@@ -103,6 +119,8 @@ export default defineComponent({
       search,
       displayedItems,
       searchItem,
+      share,
+      navigator,
     };
   },
 });
