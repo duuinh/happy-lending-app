@@ -13,7 +13,6 @@
         color="orange"
         class="q-pt-md"
         style="width: 97%"
-        @update:model-value="searchItem($event)"
       >
         <template v-slot:append>
           <q-icon
@@ -58,9 +57,10 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watchEffect } from "vue";
 import { useItemStore } from "stores/item";
 import { ItemStatusEnum } from "../enums";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "BorrowPage",
@@ -68,23 +68,39 @@ export default defineComponent({
     const $q = useQuasar();
     const store = useItemStore();
     const displayedItems = ref([]);
+    const route = new useRoute();
+    const router = new useRouter();
+    const search = ref(route.query.item);
     onMounted(async () => {
       $q.loading.show();
       await store.fetchItems();
       displayedItems.value = store.filteredItems;
+      searchItem(search.value);
       $q.loading.hide();
     });
 
+    watchEffect(() => searchItem(search.value));
+
     function searchItem(value) {
-      displayedItems.value = store.filteredItems.filter((item) =>
-        item.name.toLowerCase().includes(value.toLowerCase())
-      );
+      if (value) {
+        displayedItems.value = store.filteredItems.filter((item) =>
+          item.name.toLowerCase().includes(value.toLowerCase())
+        );
+        router.replace({ query: { item: search.value } });
+      } else {
+        displayedItems.value = store.filteredItems;
+        router.replace({ query: null });
+      }
+    }
+
+    function share(itemName) {
+      // route.query.item;
     }
 
     return {
       store,
       ItemStatusEnum,
-      search: ref(""),
+      search,
       displayedItems,
       searchItem,
     };
