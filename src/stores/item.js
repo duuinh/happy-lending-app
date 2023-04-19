@@ -47,5 +47,8 @@ export const useItemStore = defineStore("item", {
       payload.img_url = data.url;
       await api.post(`/api/items`, payload);
     },
+    async updateStatus(id, status) {
+      await api.put(`/api/items/${id}`, { status });
+    },
   },
 });

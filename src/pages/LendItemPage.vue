@@ -36,6 +36,8 @@
             label="What do you want to lend?"
             stack-label
             color="brown"
+            maxlength="50"
+            counter
             placeholder="Name of item"
             style="width: 200px"
             :rules="[(val) => !!val || 'Field is required']"
