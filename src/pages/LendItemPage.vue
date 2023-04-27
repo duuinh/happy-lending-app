@@ -7,6 +7,11 @@
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/lend" />
         </q-page-sticky>
+
+        <div class="q-pa-lg text-brown text-center text-weight-bold text-h6">
+          I Want To Lend
+        </div>
+
         <q-form
           @submit="submit"
           class="q-gutter-y-md column text-center items-center"

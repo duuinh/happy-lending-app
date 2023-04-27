@@ -16,10 +16,14 @@
       <router-view />
     </q-page-container>
     <q-footer class="bg-white">
+      
       <q-tabs
         v-model="tab"
+        indicator-color="brown"
+        active-color="brown-10"
         dense
-        class="bg-orange-1 text-brown shadow-2"
+        
+        class="bg-orange-1 text-grey-7 shadow-2"
         align="justify"
       >
         <q-route-tab to="/" name="home" icon="home" label="Home" />

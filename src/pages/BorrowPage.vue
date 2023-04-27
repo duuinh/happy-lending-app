@@ -31,7 +31,7 @@
         flat
         bordered
       >
-        <q-img :src="item.img_url" />
+        <q-img :src="item.img_url"/>
 
         <q-card-section class="q-py-xs">
           <div class="text-overline text-orange-9">
@@ -57,9 +57,9 @@
     </div>
     <div v-else>No items available</div>
   </q-page>
-  <!-- <q-page-sticky position="bottom" :offset="[18, 18]">
-    <q-btn round size="lg" color="brown" icon="add" />
-  </q-page-sticky> -->
+  <q-page-sticky position="bottom" :offset="[18, 18]">
+    <q-btn round size="lg" color="brown" icon="add" to="/borrow/item"/>
+  </q-page-sticky>
 </template>
 
 <script>
@@ -129,4 +129,5 @@ export default defineComponent({
 <style lang="sass" scoped>
 .my-card
   width: 100%
+  
 </style>
