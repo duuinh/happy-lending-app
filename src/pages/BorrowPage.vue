@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center bg-grey-1">
-    <div v-if="store.filteredItems.length > 0" class="q-pa-md q-gutter-md">
+    <div
+      v-if="store.filteredItems.length > 0"
+      class="flex flex-center q-pa-md q-gutter-md"
+    >
       <q-input
         bottom-slots
         v-model="search"
@@ -9,7 +12,7 @@
         filled
         color="orange"
         class="q-pt-md"
-        style="max-width: 350px"
+        style="min-width: 300px"
       >
         <template v-slot:append>
           <q-icon
@@ -21,7 +24,7 @@
           <q-icon name="search" />
         </template>
       </q-input>
-      <div class="q-ma-xs row items-start q-gutter-md">
+      <div class="flex flex-center q-ma-xs row items-start q-gutter-md">
         <q-card
           v-for="item in displayedItems"
           :key="item._id"
@@ -134,5 +137,5 @@ export default defineComponent({
 <style lang="sass" scoped>
 .my-card
   width: 100%
-  max-width: 350px
+  max-width: 450px
 </style>
