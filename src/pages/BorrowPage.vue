@@ -33,12 +33,12 @@
           bordered
         >
           <q-card-section horizontal>
-            <q-img class="col-5" :src="item.img_url" />
+            <q-img class="col-3" :src="item.img_url" />
             <q-card-section class="q-py-xs">
               <div class="text-overline text-orange-9">
                 {{ item.lender.location.name }}
               </div>
-              <div class="text-h5 q-mt-sm q-mb-xs">{{ item.name }}</div>
+              <div class="text-h6 q-mt-sm q-mb-xs">{{ item.name }}</div>
             </q-card-section>
           </q-card-section>
           <q-separator />
