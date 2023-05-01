@@ -40,6 +40,9 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach(async (to) => {
     const auth = getAuth();
     onAuthStateChanged(auth, async function (user) {
+      const userStore = useUserStore();
+      userStore.token = auth.currentUser?.accessToken;
+
       // routes with `meta: { requiresAuth: true }` will check for the users, others won't
       if (!user) {
         if (to.meta.requiresAuth) {
@@ -54,7 +57,6 @@ export default route(function (/* { store, ssrContext } */) {
           // };
         }
       } else {
-        const userStore = useUserStore();
         if (!userStore.user) {
           try {
             await userStore.findByEmail(user.email);
