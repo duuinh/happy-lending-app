@@ -32,7 +32,7 @@ export const useRequestedItemStore = defineStore("requested_item", {
     },
     async fetchMyRequests() {
       const { data } = await api.get(
-        `/api/items/borrower/${userStore.user._id}`
+        `/api/requested_items/borrower/${userStore.user._id}`
       );
       this.myRequests = data;
     },
