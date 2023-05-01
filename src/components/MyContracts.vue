@@ -188,6 +188,52 @@
         </template>
       </div>
       <div v-else class="flex flex-center text-grey">No Borrowing Items</div>
+      <q-item-label header>Item Requests</q-item-label>
+      <div v-if="requestedItemStore.myRequests.length">
+        <template v-for="item in requestedItemStore.myRequests" :key="item._id">
+          <q-item>
+            <q-item-section>
+              <q-item-label>{{ item.name }}</q-item-label>
+              <q-space />
+              <q-item-label caption>
+                <div class="text-weight-bold">Pick-up date:</div>
+                <div class="q-pb-xs">
+                  {{
+                    dayjs(item.pick_up_date).format(
+                      "MMM DD, YYYY (ddd) - hh:mm A"
+                    )
+                  }}
+                </div>
+                <div class="text-weight-bold">Return date:</div>
+                <div>
+                  {{
+                    dayjs(item.return_date).format(
+                      "MMM DD, YYYY (ddd) - hh:mm A"
+                    )
+                  }}
+                </div>
+              </q-item-label>
+            </q-item-section>
+
+            <q-item-section side top>
+              <q-item-label caption>{{
+                dayjs(item.updatedAt).fromNow()
+              }}</q-item-label>
+              <q-btn
+                size="12px"
+                flat
+                dense
+                round
+                icon="close"
+                @click="closeItemRequest(item._id)"
+              >
+              </q-btn>
+            </q-item-section>
+          </q-item>
+          <q-separator spaced />
+        </template>
+      </div>
+      <div v-else class="flex flex-center text-grey">No Item Requests</div>
     </q-list>
   </div>
 </template>
@@ -198,19 +244,22 @@ import { useQuasar } from "quasar";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useContractStore } from "src/stores/contract";
-import { ContractStatusEnum } from "src/enums";
+import { ContractStatusEnum, RequestedItemStatusEnum } from "src/enums";
+import { useRequestedItemStore } from "src/stores/requested_item";
 
 export default defineComponent({
   name: "MyContracts",
   setup() {
     dayjs.extend(relativeTime);
     const contractStore = useContractStore();
+    const requestedItemStore = useRequestedItemStore();
     const $q = useQuasar();
 
     onMounted(async () => {
       $q.loading.show();
       await contractStore.fetchLendingItems();
       await contractStore.fetchBorrowingItems();
+      await requestedItemStore.fetchMyRequests();
       $q.loading.hide();
     });
 
@@ -290,7 +339,49 @@ export default defineComponent({
       await contractStore.fetchLendingItems();
       $q.loading.hide();
     }
-    return { contractStore, dayjs, endContract, accept, reject };
+
+    async function closeItemRequest(id) {
+      $q.dialog({
+        title: "Close Item Request",
+        color: "deep-orange",
+        message: "Would you like to close your request?",
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        $q.loading.show();
+        await await requestedItemStore.updateStatus(
+          id,
+          RequestedItemStatusEnum.closed
+        );
+
+        $q.notify({
+          message: "Your request is closed",
+          color: "deep-orange",
+          position: "top",
+          actions: [
+            {
+              label: "Dismiss",
+              color: "white",
+              handler: () => {
+                /* ... */
+              },
+            },
+          ],
+        });
+
+        await requestedItemStore.fetchMyRequests();
+        $q.loading.hide();
+      });
+    }
+    return {
+      contractStore,
+      requestedItemStore,
+      dayjs,
+      endContract,
+      accept,
+      reject,
+      closeItemRequest,
+    };
   },
 });
 </script>

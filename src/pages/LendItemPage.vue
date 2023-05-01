@@ -7,6 +7,11 @@
         <q-page-sticky position="top-right" :offset="[5, 5]">
           <q-btn flat round size="lg" color="grey" icon="close" to="/lend" />
         </q-page-sticky>
+
+        <div class="q-pa-lg text-brown text-center text-weight-bold text-h6">
+          I Want To Lend
+        </div>
+
         <q-form
           @submit="submit"
           class="q-gutter-y-md column text-center items-center"
@@ -63,7 +68,7 @@ import { useQuasar } from "quasar";
 import { defineComponent, ref, onMounted } from "vue";
 import { useItemStore } from "../stores/item";
 import { useUserStore } from "../stores/user";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Compressor from "compressorjs";
 
 export default defineComponent({
@@ -71,9 +76,10 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const router = useRouter();
+    const route = useRoute();
     const userStore = useUserStore();
     const form = ref({
-      name: "",
+      name: route.query.name || "",
       img_url:
         "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
       lender: "",

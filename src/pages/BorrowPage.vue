@@ -57,9 +57,9 @@
     </div>
     <div v-else>No items available</div>
   </q-page>
-  <!-- <q-page-sticky position="bottom" :offset="[18, 18]">
-    <q-btn round size="lg" color="brown" icon="add" />
-  </q-page-sticky> -->
+  <q-page-sticky position="bottom" :offset="[18, 18]">
+    <q-btn round size="lg" color="brown" icon="add" to="/borrow/item_request" />
+  </q-page-sticky>
 </template>
 
 <script>
