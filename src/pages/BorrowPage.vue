@@ -1,9 +1,6 @@
 <template>
   <q-page class="flex flex-center bg-grey-1">
-    <div
-      v-if="store.filteredItems.length > 0"
-      class="q-pa-md row items-start q-gutter-md"
-    >
+    <div v-if="store.filteredItems.length > 0" class="q-pa-md q-gutter-md">
       <q-input
         bottom-slots
         v-model="search"
@@ -12,7 +9,7 @@
         filled
         color="orange"
         class="q-pt-md"
-        style="width: 97%"
+        style="max-width: 350px"
       >
         <template v-slot:append>
           <q-icon
@@ -24,36 +21,44 @@
           <q-icon name="search" />
         </template>
       </q-input>
-      <q-card
-        v-for="item in displayedItems"
-        :key="item._id"
-        class="my-card"
-        flat
-        bordered
-      >
-        <q-img :src="item.img_url" />
-
-        <q-card-section class="q-py-xs">
-          <div class="text-overline text-orange-9">
-            {{ item.lender.location.name }}
-          </div>
-          <div class="text-h5 q-mt-sm q-mb-xs">{{ item.name }}</div>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <!-- <q-btn flat round color="red-2" icon="bookmark" /> -->
-          <q-btn
-            v-if="navigator.share"
-            flat
-            round
-            color="black"
-            icon="share"
-            @click="share(item.name)"
-          />
-          <q-space />
-          <q-btn flat color="brown" label="Borrow" :to="`borrow/${item._id}`" />
-        </q-card-actions>
-      </q-card>
+      <div class="q-ma-xs row items-start q-gutter-md">
+        <q-card
+          v-for="item in displayedItems"
+          :key="item._id"
+          class="my-card"
+          flat
+          bordered
+        >
+          <q-card-section horizontal>
+            <q-img class="col-5" :src="item.img_url" />
+            <q-card-section class="q-py-xs">
+              <div class="text-overline text-orange-9">
+                {{ item.lender.location.name }}
+              </div>
+              <div class="text-h5 q-mt-sm q-mb-xs">{{ item.name }}</div>
+            </q-card-section>
+          </q-card-section>
+          <q-separator />
+          <q-card-actions align="right">
+            <!-- <q-btn flat round color="red-2" icon="bookmark" /> -->
+            <q-btn
+              v-if="navigator.share"
+              flat
+              round
+              color="black"
+              icon="share"
+              @click="share(item.name)"
+            />
+            <q-space />
+            <q-btn
+              flat
+              color="brown"
+              label="Borrow"
+              :to="`borrow/${item._id}`"
+            />
+          </q-card-actions>
+        </q-card>
+      </div>
     </div>
     <div v-else>No items available</div>
   </q-page>
@@ -129,4 +134,5 @@ export default defineComponent({
 <style lang="sass" scoped>
 .my-card
   width: 100%
+  max-width: 350px
 </style>
