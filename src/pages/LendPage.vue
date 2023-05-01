@@ -1,9 +1,7 @@
 <template>
-  <q-page v-if="!userStore.user" class="flex flex-center bg-grey-1">
-    Lend an item
-  </q-page>
-  <q-page v-else class="flex bg-grey-1">
-    <MyItems></MyItems>
+  <q-page class="flex bg-grey-1">
+    <RequestedItems></RequestedItems>
+    <MyItems v-if="userStore.user"></MyItems>
   </q-page>
   <q-page-sticky position="bottom" :offset="[18, 18]">
     <q-btn round size="lg" color="brown" icon="add" to="/lend/item" />
@@ -13,11 +11,12 @@
 <script>
 import { defineComponent } from "vue";
 import MyItems from "src/components/MyItems.vue";
+import RequestedItems from "src/components/RequestedItems.vue";
 import { useUserStore } from "../stores/user";
 
 export default defineComponent({
   name: "LendPage",
-  components: { MyItems },
+  components: { MyItems, RequestedItems },
   setup() {
     const userStore = useUserStore();
     return { userStore };
