@@ -39,6 +39,13 @@
               <q-item-label caption>{{
                 dayjs(item.updatedAt).fromNow()
               }}</q-item-label>
+              <div class="text-grey-8 q-gutter-xs q-pt-md">
+                <q-btn
+                  color="deep-orange"
+                  :to="`/lend/item?name=${item.name}&request_id=${item._id}`"
+                  >Lend</q-btn
+                >
+              </div>
             </q-item-section>
           </q-item>
           <q-separator spaced />

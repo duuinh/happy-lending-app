@@ -68,7 +68,7 @@ import { useQuasar } from "quasar";
 import { defineComponent, ref, onMounted } from "vue";
 import { useItemStore } from "../stores/item";
 import { useUserStore } from "../stores/user";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Compressor from "compressorjs";
 
 export default defineComponent({
@@ -76,9 +76,10 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const router = useRouter();
+    const route = useRoute();
     const userStore = useUserStore();
     const form = ref({
-      name: "",
+      name: route.query.name || "",
       img_url:
         "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
       lender: "",
