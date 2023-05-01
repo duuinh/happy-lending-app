@@ -32,7 +32,7 @@ const routes = [
   },
 
   {
-    path: "/borrow/item",
+    path: "/borrow/item_request",
     component: () => import("pages/BorrowRequestPage.vue"),
     meta: { requiresAuth: true },
   },
